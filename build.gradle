@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     id "base"
     id "idea"
@@ -10,6 +12,9 @@ repositories {
     jcenter()
     maven { url 'https://jitpack.io' }
 }
+
+// The project version
+version '0.0.12'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -27,6 +32,24 @@ dependencies {
     compile 'com.github.ntrrgc:ts-generator:1.1.1'
 
     testCompile 'io.kotlintest:kotlintest-runner-junit5:3.4.0'
+}
+
+// A custom task that executes the code to generate typings from backend api's
+task(generateTypings, dependsOn: 'classes', type: JavaExec) {
+    main = 'nl.toefel.blog.backendtypings.dto.typings.TypingsGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["backend-api-typings", "${project.version}"] // the location where to write typings and the project version
+}
+
+// Publish typings to the npm registry, make sure you first run npm login
+// so that you are able to publish or configure your .npmrc
+task(publishTypings, type: Exec) {
+    workingDir 'backend-api-typings'
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine "npm.cmd", "publish", "--access", "public"
+    } else {
+        commandLine "npm", "publish", "--access", "public"
+    }
 }
 
 test {

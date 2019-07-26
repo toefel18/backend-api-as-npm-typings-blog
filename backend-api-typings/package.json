@@ -1,0 +1,12 @@
+{
+  "name": "backend-api-as-npm-typings-blog",
+  "version": "0.0.11",
+  "description": "typings for backend-api-npm-typings java app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toefel18/backend-api-as-npm-typings-blog.git"
+  },
+  "author": "toefel18@gmail.com",
+  "license": "ISC",
+  "homepage": "https://github.com/toefel18/backend-api-as-npm-typings-blog#readme"
+}
