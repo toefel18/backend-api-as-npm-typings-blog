@@ -23,11 +23,8 @@ object TypingsGenerator {
                 MovieWithActorDto::class
             ),
             mappings = mapOf(
-                ZonedDateTime::class to "Date",
-                LocalDateTime::class to "Date",
-                LocalDate::class to "Date"
+                ZonedDateTime::class to "Date"
             )
         ).definitionsText)
-        logger.info("YAY")
     }
 }
