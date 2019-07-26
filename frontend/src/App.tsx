@@ -1,29 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-
 
 
 const App: React.FC = () => {
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [actors, setActors] = useState<ActorDto[]>()
+    const [error, setError] = useState<string | undefined>()
+
+    useEffect(() => {
+        fetch("http://localhost:8080/actors")
+            .then(res => res.json())
+            .then(json => setActors(json as ActorDto[]))
+            .catch(err => setError(err))
+    }, [])
+
+    return (
+        <div className="App">
+            {error && <div>ERROR: {error}</div>}
+            {actors && actors.map(actor => {
+                return <div>Actor {actor.firstName} {actor.lastName} </div>
+            })}
+        </div>
+    );
 }
 
 export default App;

@@ -2,8 +2,10 @@ package nl.toefel.blog.backendtypings.rest
 
 import io.javalin.Javalin
 import io.javalin.http.Context
+import nl.toefel.blog.backendtypings.dto.ActorDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.ZonedDateTime
 
 /**
  * Creates the webserver:
@@ -29,7 +31,10 @@ class Router(val port: Int) {
     }
 
     fun listActors(ctx: Context) {
-
+        val actors = listOf(
+            ActorDto("Johnny", "Depp", ZonedDateTime.now()),
+            ActorDto("Brad", "Pitt", ZonedDateTime.now()))
+        ctx.json(actors)
     }
 
     fun listMovies(ctx: Context) {
